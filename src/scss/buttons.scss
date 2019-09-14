@@ -1,0 +1,15 @@
+@import "varibles";
+
+.button {
+    padding: 10px 25px;
+    border: 1px solid #fff;
+    display: inline-block;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: color .25s, background .25s;
+
+    &:hover {
+        background-color: #fff;
+        color: $one600;
+    }
+}

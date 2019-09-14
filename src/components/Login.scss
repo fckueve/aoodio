@@ -1,0 +1,41 @@
+.login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+
+    h2 {
+        font-weight: 300;
+    }
+
+    input {
+        border: none;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 300;
+        background-color: initial;
+        border-bottom: 1px solid #fff;
+        padding: 10px 20px;
+        color: #fff;
+        text-align: center;
+        transition: width 0.2s;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:placeholder-shown {
+            width: 70%;
+        }
+
+        &:nth-child(2) {
+            margin-top: 20px;
+        }
+    }
+
+    .send {
+        margin-top: 20px;
+    }
+}
