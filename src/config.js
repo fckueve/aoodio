@@ -1,5 +1,7 @@
-import apikey from 'apikey'
+import apikey from './apikey'
 
 const config = {
-    apiKey
+    ...apikey
 }
+
+export default config;

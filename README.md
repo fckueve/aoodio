@@ -2,6 +2,11 @@
 2. Coppy content from here.
 
 ```
-export default apikey = '';
+export default apikey = {
+    client_id: '...',
+    client_secret: '...',
+    redirect: '...'
+};
+
 ```
 3. Paste api key to the spotify.
