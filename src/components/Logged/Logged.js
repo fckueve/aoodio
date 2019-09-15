@@ -18,17 +18,28 @@ class Logged extends Component {
 
     getToken (key) {
 
+        let data = this.request.encodeURI({
+            grant_type: 'authorization_code',
+            code: key,
+            redirect_uri: 'http://localhost/:3000/token'
+        })
+
+        // let data = {
+        //     grant_type: 'authorization_code',
+        //     code: key,
+        //     redirect_uri: 'http://localhost/:3000/token',
+        // }
+
+        console.log(data)
+
         fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
-                'Authorization': `Basic *${btoa(config.client_id + ':' + config.client_secret)}*`
+                'Authorization': 'Basic ' + btoa(config.client_id + ':' + config.client_secret),
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify({
-                grant_type: 'authorization_code',
-                code: key,
-                redirect_uri: 'http://localhost/:3000/token',
-            })
+            body: data
         }).then((res) => {
             return res.text();
         }).then(res => {

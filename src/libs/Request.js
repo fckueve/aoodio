@@ -38,6 +38,13 @@ export class Request {
         this.abortController.abort();
     }
 
+    encodeURI (data) {
+        data = Object.keys(data).map((key) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+        }).join('&');
+        return data;
+    }
+
     dataToUrl (data) {
         let out = '';
 
