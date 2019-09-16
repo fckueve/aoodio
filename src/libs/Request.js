@@ -39,10 +39,16 @@ export class Request {
     }
 
     encodeURI (data) {
-        data = Object.keys(data).map((key) => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-        }).join('&');
-        return data;
+		let out = [];
+
+		for (let name in data) {
+			let key = encodeURIComponent(name);
+			let value = encodeURIComponent(data[name]);
+			out.push(key + "=" + value);
+		}
+
+		out = out.join('&');
+		return out;
     }
 
     dataToUrl (data) {

@@ -18,33 +18,45 @@ class Logged extends Component {
 
     getToken (key) {
 
-        let data = this.request.encodeURI({
-            grant_type: 'authorization_code',
-            code: key,
-            redirect_uri: 'http://localhost/:3000/token'
-        })
-
-        // let data = {
+        // let data = this.request.encodeURI({
         //     grant_type: 'authorization_code',
         //     code: key,
-        //     redirect_uri: 'http://localhost/:3000/token',
-        // }
+        //     redirect_uri: config.redirect_uri,
+		// 	client_id: config.client_id,
+		// 	client_secret: config.client_secret
+        // })
 
-        console.log(data)
+        // console.log(data)
+		//
+        // fetch('https://accounts.spotify.com/api/token', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     headers: {
+		// 		'Accept': '*/*',
+        //         //'Authorization': 'Basic ' + btoa(config.client_id + ':' + config.client_secret),
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     body: data
+        // }).then(res => {
+		// 	console.log(res);
+        //     return res.text();
+        // }).then(res => {
+        //     console.log(res);
+        // })
 
-        fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Authorization': 'Basic ' + btoa(config.client_id + ':' + config.client_secret),
-                'Content-Type': 'application/x-www-form-urlencoded'
+		fetch('http://localhost:3555/getToken?code=' + key, {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'Accept': '*/*'
             },
-            body: data
-        }).then((res) => {
-            return res.text();
-        }).then(res => {
-            console.log(res);
-        })
+		}).then(res => {
+			return res.json();
+		}).then(res => {
+			console.log(res)
+		}).catch(error => {
+			console.log(error)
+		})
     }
 
     render () {

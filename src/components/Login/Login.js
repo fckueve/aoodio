@@ -21,7 +21,8 @@ class Login extends Component {
             client_id: config.client_id,
             response_type: 'code',
             scopes: config.scopes,
-            redirect_uri: config.redirect_uri
+            redirect_uri: config.redirect_uri,
+			show_dialog: 'true'
         })
 
         let url = encodeURI('https://accounts.spotify.com/authorize?' + dataToSend);
