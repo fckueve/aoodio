@@ -3,5 +3,7 @@
 	"client_secret": "5e3c073d6ccf4c659cc400c57b194b22",
 	"redirect_uri": "http://localhost:3000/logged/",
 	"scopes": "user-top-read user-read-currently-playing user-read-playback-state",
-	"grant_type": "authorization_code"
+	"grant_type": "authorization_code",
+	"port": 3555,
+	"host": "http://localhost"
 }

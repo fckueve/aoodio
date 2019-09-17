@@ -23,7 +23,7 @@ class Logged extends Component {
     }
 
     getToken (key) {
-		fetch('http://localhost:3555/getToken?code=' + key, {
+		fetch(`${config.host}${config.port !== 80 ? ':' + config.port : ''}/getToken?code=` + key, {
 			method: 'POST',
 			mode: 'cors',
 			headers: {

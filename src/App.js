@@ -2,6 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Cookies } from './libs/Libs';
 import GlobalProvider from './GlobalProvider';
+import config from './config';
 import './App.scss';
 
 const Login = React.lazy(() => import('./components/Login/Login'));
@@ -14,8 +15,40 @@ class App extends Component {
         super(props);
 
         this.state = {
-            logged: Cookies.get('access_token') ? true : false//// TODO: change to refresh if exist
+            logged: this.checkIfLogged()
         }
+    }
+
+    checkIfLogged () {
+
+        if (Cookies.get('access_token')) {
+            return true;
+        } else if (Cookies.get('refresh_token')) {
+            this.refreshToken();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    refreshToken () {
+        fetch(`${config.host}${config.port !== 80 ? ':' + config.port : ''}/refreshToken?refresh_token=${Cookies.get('refresh_token')}`, {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				'Accept': '*/*',
+				'Content-Type': 'appilcation/json'
+            },
+		}).then(res => {
+            return res.json()
+        }).then(res => {
+            console.log(res);
+            this.setState({
+                logged: true
+            });
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
 	loggedHandler (logged) {
@@ -29,11 +62,11 @@ class App extends Component {
 			<GlobalProvider>
 	            <Router>
 	                <Suspense fallback={<div>Loading...</div>}>
-						<Route path="/" component={Root} />
-	                    <Route path="/login/" component={Login} />
 	                    <Route path="/logged/" component={Logged} />
+                        <Route path="/login/" component={Login} />
+                        <Route path="/" component={Root} />
 	                    {!this.state.logged ?
-	                        <Redirect to="/login/"/> : null
+                            <Redirect to="/login/"/> : null
 	                    }
 	                </Suspense>
 	            </Router>
