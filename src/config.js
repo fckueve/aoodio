@@ -1,7 +1,8 @@
-import apikey from './apikey'
+import * as api from './api.json';
 
+delete api['default']['client_secret'];
 const config = {
-    ...apikey
+    ...api['default']
 }
 
 export default config;

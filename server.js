@@ -1,15 +1,9 @@
-var postQuery = 'grant_type=client_credentials ';
-var request = require('request');
-var express = require('express');
-var cors = require('cors');
-var app = express();
+const request = require('request');
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
-const apikey = {
-	client_id: 'edde4c781ed64842bbc5ca510cc17e23',
-	client_secret: '5e3c073d6ccf4c659cc400c57b194b22',
-	redirect_uri: 'http://localhost:3000/logged/',
-	grant_type: 'authorization_code'
-}
+const api = require('./src/api.json')
 
 let encodeURI = (data) => {
 	let out = [];
@@ -34,7 +28,7 @@ app.post('/getToken', function(req, res){
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		body: encodeURI({...apikey, ...{code:code}})
+		body: encodeURI({...api, ...{code:code}})
 	},
 	function (error, response, data){
 		res.send(data);

@@ -23,7 +23,6 @@ class Logged extends Component {
     }
 
     getToken (key) {
-
 		fetch('http://localhost:3555/getToken?code=' + key, {
 			method: 'POST',
 			mode: 'cors',
@@ -36,12 +35,14 @@ class Logged extends Component {
 		}).then(res => {
 			if (!res.error) {
 				Cookies.set('access_token', res.access_token, res.expires_in);
-				Cookies.set('refresh_token', res.refresh_token, res.expires_in);
+				Cookies.set('refresh_token', res.refresh_token, res.expires_in * 24 * 30);
 				Cookies.set('scope', res.scope, res.expires_in);
-				Cookies.set('token_type', res.token_type, res.expires_in * 24 * 30);
-				this.getProfile();
+				Cookies.set('token_type', res.token_type, res.expires_in);
+
+				this.props.history.push('/');
 			}
 		}).catch(error => {
+			console.log(error)
 		})
     }
 
