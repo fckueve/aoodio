@@ -1,3 +1,5 @@
+import { Cookies } from './Libs';
+
 export class Request {
 
 
@@ -5,14 +7,28 @@ export class Request {
         this.abortController = new AbortController()
     }
 
+	getAuth () {
+		let auth = {}
+
+		if (Cookies.get('access_token')) {
+			auth['Authorization'] = `${Cookies.get('token_type')} ${Cookies.get('access_token')}`;
+		}
+		console.log(auth)
+
+		return auth;
+	}
+
     post (urlSuffix, body) {
+		let auth = this.getAuth();
+
         return fetch('https://api.spotify.com/' + urlSuffix, {
             signal: this.abortController.signal,
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Accept': '*/*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+				'Authorization': auth.Authorization
             },
             body: JSON.stringify(body)
         }).then((res) => {
@@ -21,13 +37,16 @@ export class Request {
     }
 
     get (urlSuffix) {
+		let auth = this.getAuth();
+
         return fetch('https://api.spotify.com/' + urlSuffix, {
             signal: this.abortController.signal,
             method: 'GET',
             mode: 'cors',
             headers: {
                 'Accept': '*/*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+				'Authorization': auth.Authorization
             }
         }).then((res) => {
             return res.json();

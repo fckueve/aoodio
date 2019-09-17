@@ -1,6 +1,7 @@
 var postQuery = 'grant_type=client_credentials ';
 var request = require('request');
 var express = require('express');
+var cors = require('cors');
 var app = express();
 
 const apikey = {
@@ -23,7 +24,9 @@ let encodeURI = (data) => {
 	return out;
 }
 
-app.get('/getToken', function(req, res){
+app.use(cors());
+
+app.post('/getToken', function(req, res){
 	let code = req.query.code;
 	request({
 		url: "https://accounts.spotify.com/api/token",
@@ -34,7 +37,6 @@ app.get('/getToken', function(req, res){
 		body: encodeURI({...apikey, ...{code:code}})
 	},
 	function (error, response, data){
-		console.log(data)
 		res.send(data);
 	});
 });
