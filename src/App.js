@@ -63,10 +63,9 @@ class App extends Component {
 	            <Router>
 	                <Suspense fallback={<div>Loading...</div>}>
 	                    <Route path="/logged/" component={Logged} />
-                        <Route path="/login/" component={Login} />
                         <Route path="/" component={Root} />
 	                    {!this.state.logged ?
-                            <Redirect to="/login/"/> : null
+                            <Login /> : null
 	                    }
 	                </Suspense>
 	            </Router>
