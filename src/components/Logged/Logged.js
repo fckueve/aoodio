@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Request, Cookies } from '../../libs/Libs';
 import config from '../../config'
+import GlobalContext from '../../GlobalContext';
 
 
 class Logged extends Component {
@@ -8,6 +9,7 @@ class Logged extends Component {
     constructor (props) {
         super(props);
 
+		this.consumer = null;
         this.request = new Request();
     }
 
@@ -54,11 +56,20 @@ class Logged extends Component {
 		})
 	}
 
+	setConsumer (globalState) {
+		this.consumer = globalState;
+	}
+
     render () {
         return (
-            <div>
-                callback / logged
-            </div>
+			<GlobalContext.Consumer>
+				{context => (
+					<div>
+						callback / logged
+						{this.setConsumer(context)}
+					</div>
+				)}
+			</GlobalContext.Consumer>
         )
     }
 }

@@ -9,23 +9,33 @@ class GlobalProvider extends Component {
 		super(props)
 
 		this.state = {
-			user: null
+			user: null,
+			logged: false,
+			loginInProgress: false
 		}
 
 		this.request = new Request();
+		this.logged = this.logged.bind(this)
+		this.loginInProgress = this.loginInProgress.bind(this)
 	}
 
-	componentDidMount () {
-
+	logged (value) {
+		this.setState({logged: value})
 	}
 
+	loginInProgress (value) {
+		this.setState({logged: value})
+	}
 
 	render () {
 		let self = this;
 		return (
 			<GlobalContext.Provider value={{
 					state: this.state,
-					handlers: {}
+					handlers: {
+						logged: this.logged,
+						loginInProgress: this.loginInProgress
+					}
 				}}>
 				{this.props.children}
 			</GlobalContext.Provider>
